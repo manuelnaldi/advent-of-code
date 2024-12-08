@@ -21,9 +21,25 @@ pageOrderRules.forEach(rule => {
 })
 
 function checkOrderRule(update) {
-  for (let i=1; i < update.length; i++){
-    //TODO: check order rule 
+  var middleNumber = undefined;
+  var orderOk = true;
+  for(let i=1; i < update.length; i++){
+    for (let j=i-1; j >= 0; j--){
+      for(let k=0; k < splittedPageOrderRules.length; k++) {
+        if(update[i] === splittedPageOrderRules[k][0] && update[j]===splittedPageOrderRules[k][1]){
+          orderOk = false;
+          break;
+        }
+        if(!orderOk) break;
+      }
+      if(!orderOk) break;
+    }
   }
+  if(orderOk) {
+    const middleIndex = Math.trunc(update.length/2);
+    middleNumber = update[middleIndex];
+  }
+  return middleNumber;
 }
 
 var total = 0;
@@ -33,3 +49,5 @@ updates.forEach((update) => {
   if(middleNumber != undefined) total += middleNumber
 })
 console.log(total);
+
+//second star
